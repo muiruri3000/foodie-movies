@@ -12,7 +12,8 @@ COPY . .
 # Build for production
 RUN npm run build
 # EXPOSE 80
-CMD ["npm", "run", "preview"]
+CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "4173"]
+
 # # Stage 2: Serve with Nginx
 # FROM nginx:alpine
 
