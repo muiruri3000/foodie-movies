@@ -23,7 +23,7 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           # Build Docker image (production build included)
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/foodie-movie:latest .
+          docker build -no-cache -t ${{ secrets.DOCKER_USERNAME }}/foodie-movie:latest .
           
           # Optional: inspect image to make sure dist is included
           docker run --rm ${{ secrets.DOCKER_USERNAME }}/foodie-movie:latest ls -l /usr/share/nginx/html
