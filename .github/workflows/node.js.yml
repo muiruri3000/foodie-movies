@@ -29,7 +29,7 @@ jobs:
         run: npm ci
 
       - name: Build React (Vite)
-        run: npm run build
+        run: docker build -t your-username/foodie-movie:latest .
 
       - name: Log in to DockerHub
         uses: docker/login-action@v2
