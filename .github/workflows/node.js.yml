@@ -17,6 +17,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Extract metadata (tags and labels) from Docker
+        id: metadata
+        uses: docker/metadata-action@v5
+        with:
+          labels: foodie-movie-z
+          images: docker.io/muiruri1/foodie-movie-z
+          tags: ${{ github.sha }}
       # - name: Set up Node.js
       #   uses: actions/setup-node@v3
       #   with:
