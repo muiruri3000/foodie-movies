@@ -1,5 +1,5 @@
 # Stage 1: Build React app
-FROM node:20
+FROM node:20 AS builder
 WORKDIR /app
 
 # Copy only package files first to leverage caching
@@ -11,17 +11,19 @@ COPY . .
 
 # Build for production
 RUN npm run build
-# EXPOSE 80
-CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "4173"]
 
-# # Stage 2: Serve with Nginx
-# FROM nginx:alpine
+# Debug stage to see what was built
+FROM alpine:latest
+WORKDIR /app
 
-# # Copy build artifacts from previous stage
-# COPY --from=build /app/dist /usr/share/nginx/html
+# Copy built files
+COPY --from=builder /app/dist ./dist
 
-# # Copy custom Nginx config
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Install curl and busybox httpd for debugging
+RUN apk add --no-cache curl busybox-extras
 
-# EXPOSE 80
-# CMD ["nginx", "-g", "daemon off;"]
+# List files for debugging
+RUN echo "Built files:" && ls -la dist/
+
+EXPOSE 3000
+CMD ["httpd", "-f", "-h", "/app/dist", "-p", "3000"]
