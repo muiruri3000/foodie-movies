@@ -46,9 +46,9 @@ jobs:
           push: true
           context: .
           file: ./Dockerfile
-          tags:  docker.io/muiruri1/foodie-movie-z:{{github.sha}}
+          tags:  docker.io/muiruri1/foodie-movie-z:${{ github.sha }}
 
       - name: Output Image
-        run: echo image:docker.io/muiruri1/foodie-movie-z:{{github.sha}}
+        run: echo image:docker.io/muiruri1/foodie-movie-z:${{github.sha}}
       # - name: Push Docker image
       #   run: docker push ${{ secrets.DOCKER_USERNAME }}/foodie-movie:latest
